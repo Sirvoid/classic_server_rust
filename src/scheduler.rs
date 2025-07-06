@@ -29,9 +29,9 @@ impl Scheduler {
       let mut time: u32 = 0;
       loop {
         for (scheduled_time, task) in &tasks {
-            if time % scheduled_time == 0 {
-                task();
-            }
+          if time % scheduled_time == 0 {
+              task();
+          }
         }
   
         thread::sleep(Duration::from_secs(1));

@@ -6,9 +6,9 @@ pub struct PacketReader<'a> {
 
 impl PacketReader<'_> {
   pub fn read_u8(&mut self) -> u8 {
-      let read: u8 = self.buffer[self.index as usize];
-      self.index += 1;
-      return read;
+    let read: u8 = self.buffer[self.index as usize];
+    self.index += 1;
+    return read;
   }
 
   pub fn read_u16(&mut self) -> u16 {
@@ -19,10 +19,10 @@ impl PacketReader<'_> {
   }
 
   pub fn read_string(&mut self) -> String {
-      let start_index: usize = self.index as usize;
-      let read: String = String::from_utf8(self.buffer[start_index..(start_index + 64)].to_vec()).unwrap();
-      self.index += 64;
-      return read;
+    let start_index: usize = self.index as usize;
+    let read: String = String::from_utf8(self.buffer[start_index..(start_index + 64)].to_vec()).unwrap();
+    self.index += 64;
+    return read;
   }
 }
 
@@ -68,7 +68,7 @@ pub struct PacketWriter {
 
 impl PacketWriter {
   pub fn write_u8(&mut self, value: u8) {
-      self.buffer.push(value);
+    self.buffer.push(value);
   }
 
   pub fn write_u16(&mut self, value: u16) {
@@ -82,9 +82,9 @@ impl PacketWriter {
   }
 
   pub fn write_string(&mut self, value: &String) {
-      let mut bytes = value.clone().into_bytes();
-      bytes.resize(64, 0);
-      self.buffer.extend(bytes);
+    let mut bytes = value.clone().into_bytes();
+    bytes.resize(64, 0);
+    self.buffer.extend(bytes);
   }
 }
 
