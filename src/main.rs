@@ -1,11 +1,13 @@
 mod packet;
 mod world;
 mod player;
+mod world_command;
+mod scheduler;
 
 use std::{io::{Read, Write}, net::{TcpListener, TcpStream}, sync::mpsc, thread};
-use crate::world::{world_thread, WorldCommand};
+use crate::world_command::{world_command_thread, WorldCommand};
 
-pub fn send_data(stream: &mut TcpStream, data: &Vec<u8>) {
+pub fn send_data(stream: &mut TcpStream, data: &[u8]) {
     if let Err(e) = stream.write_all(data) {
         eprintln!("Error occured when writing data: {}", e);
     }
@@ -62,8 +64,10 @@ fn handle_client(player_id: u32, mut stream: TcpStream, tx: mpsc::Sender<WorldCo
 
 fn main() -> std::io::Result<()> {
     let (tx, rx) = mpsc::channel::<WorldCommand>();
-    thread::spawn(move || world_thread(rx));
+    thread::spawn(move || world_command_thread(rx));
     
+    scheduler::start_scheduler(&tx);
+
     let listener = TcpListener::bind("127.0.0.1:25565")?;
     let mut next_id: u32 = 0;
 
