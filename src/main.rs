@@ -4,8 +4,8 @@ mod player;
 mod world_command;
 mod scheduler;
 
-use std::{collections::HashMap, io::{Read, Write}, net::{TcpListener, TcpStream}, sync::mpsc::{self, Sender}, thread};
-use crate::{scheduler::Scheduler, world::World, world_command::{world_command_thread, WorldCommand}};
+use std::{collections::HashMap, io::{Read, Write}, net::{TcpListener, TcpStream}, sync::mpsc::{self}, thread};
+use crate::{scheduler::Scheduler, world_command::{world_command_thread, WorldCommand}};
 
 pub fn send_data(stream: &mut TcpStream, data: &[u8]) {
     if let Err(e) = stream.write_all(data) {
