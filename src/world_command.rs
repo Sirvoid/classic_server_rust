@@ -111,8 +111,6 @@ impl World {
   pub fn handle_save(&self) {
       if let Err(e) = self.save() {
           eprintln!("Error saving world: {}", e);
-      } else {
-          println!("World saved successfully.");
       }
   }
 }
